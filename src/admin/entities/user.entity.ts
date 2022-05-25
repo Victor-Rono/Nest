@@ -2,5 +2,6 @@
 export class User {
     id: number;
     name: string;
-    active: boolean;
+    role: string;
+    salary: number;
 }

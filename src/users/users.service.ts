@@ -6,9 +6,9 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class UsersService {
     private users: User[]  = [
-        { id: 1, name: 'Victor' },
-        { id: 2, name: 'Brenda' },
-        { id: 3, name: 'Jude' },
+        { id: 1, name: 'Victor', active: false },
+        { id: 2, name: 'Brenda', active: true},
+        { id: 3, name: 'Jude',active: true },
       ];
 
       getUsers(): User[] {
@@ -23,13 +23,9 @@ export class UsersService {
         return this.users.filter(user=> user.id != id);
     } 
 
-      createUser(createUserDto: string) :CreateUserDto[]{
+      createUser(createUserDto: CreateUserDto) :CreateUserDto[]{
 
-         const newUser ={
-            id: Date.now(),
-            name: createUserDto
-         }   
-
+         const newUser = createUserDto;
           this.users.push(newUser);
           return this.users;       
       }

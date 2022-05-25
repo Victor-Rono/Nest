@@ -2,7 +2,7 @@ import { User } from './../entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 /* eslint-disable prettier/prettier */
 import { UsersService } from './users.service';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Query } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -14,7 +14,20 @@ export class UsersController {
     return this.userService.getUsers()
   }
 
-  @Get(':id')
+@Get('search')
+searchUser(@Query('n') n: string) :User {
+const result = this.userService.getUser(Number(n));
+
+if(!result){
+  throw new NotFoundException()
+}
+
+return result;
+// return n;
+}
+
+
+@Get(':id')
   getUser(@Param('id') id: string) : User | string {
 
   const res =   this.userService.getUser(Number(id));
@@ -31,9 +44,9 @@ export class UsersController {
 //     return this.userService.createUser(createUserDto)
 //   }
 
-  @Get("add/:user")
-  addUser(@Param('user') user: string) :User[] {
-    return this.userService.createUser(user)  
+  @Post("add")
+  addUser(@Body() createUserDto: CreateUserDto) :CreateUserDto[] {
+    return this.userService.createUser(createUserDto)  
   }
 
 

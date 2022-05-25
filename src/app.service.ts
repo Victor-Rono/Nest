@@ -6,7 +6,7 @@ export class AppService {
     return 'NEST JS';
   }
 
-  getText(): any {
+  getText(): string {
     return 'Welcome to NEST JS';
   }
 }
